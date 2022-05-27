@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    FFAudioTranscoder transcoder("test001.opus", "sound.aac");
+    FFAudioTranscoder transcoder("/home/wayray/test001.opus", "/home/wayray/sound.aac");
     transcoder.open();
     transcoder.transcode();
     return 0;

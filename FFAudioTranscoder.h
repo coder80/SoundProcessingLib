@@ -31,6 +31,7 @@ public:
                       const std::string& outFile);
     int open();
     int transcode();
+    ~FFAudioTranscoder();
 
 private:
     int openInputFile();
@@ -51,20 +52,22 @@ private:
     int initOutputFrame(AVFrame **frame, int frame_size);
     int encodeAudioFrame(AVFrame *frame, int *data_present);
     int writeOutputFileTrailer();
+    void close();
+
     std::string mInputFile;
     std::string mOutFile;
     //AVCodecContext* avctx;
     //AVCodec* input_codec;
-    AVFormatContext* input_format_context = nullptr;
-    AVCodecContext* input_codec_context = nullptr;
-    AVFormatContext* output_format_context = nullptr;
-    AVCodecContext* output_codec_context = nullptr;
-    SwrContext* resample_context = nullptr;
-    AVAudioFifo* fifo = nullptr;
-    int64_t pts = 0;
-    std::shared_ptr<unsigned char> buffer;
-    std::shared_ptr<AVIOContext> avioContext;
-    std::ifstream stream;
+    AVFormatContext* mInputFormatContext = nullptr;
+    AVCodecContext* mInputCodecContext = nullptr;
+    AVFormatContext* mOutputFormatContext = nullptr;
+    AVCodecContext* mOutputCodecContext = nullptr;
+    SwrContext* mResampleContext = nullptr;
+    AVAudioFifo* mFifo = nullptr;
+    int64_t mPts = 0;
+    std::shared_ptr<unsigned char> mBuffer;
+    std::shared_ptr<AVIOContext> mAvioContext;
+    std::ifstream mStream;
 };
 
 #endif // FFAUDIOTRANSCODER_H
